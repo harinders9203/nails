@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rajvir Nail Artist</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ink:#1a1410;
+  --ink2:#2e2420;
+  --gold:#b89a6a;
+  --gold2:#d4b98a;
+  --nude:#e8ddd3;
+  --smoke:#f4f0eb;
+  --fog:#faf8f5;
+  --mute:#9a8a7a;
+  --line:rgba(184,154,106,.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+body{
+  min-height:100vh;
+  background:var(--fog);
+  color:var(--ink);
+  font-family:'Montserrat',sans-serif;
+  font-weight:300;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  position:relative;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── very subtle noise ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+/* ── warm vignette ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background:radial-gradient(ellipse 80% 70% at 50% 0%,rgba(212,185,138,.07) 0%,transparent 70%),
+             radial-gradient(ellipse 60% 60% at 10% 100%,rgba(184,154,106,.06) 0%,transparent 55%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── cursor ── */
+#cd{position:fixed;width:4px;height:4px;border-radius:50%;background:var(--gold);transform:translate(-50%,-50%);pointer-events:none;z-index:9999;transition:transform .1s}
+#cr{position:fixed;width:24px;height:24px;border-radius:50%;border:1px solid rgba(184,154,106,.5);transform:translate(-50%,-50%);pointer-events:none;z-index:9998;transition:width .2s,height .2s,border-color .2s}
+
+/* ── page ── */
+.page{
+  position:relative;z-index:1;
+  width:100%;max-width:460px;
+  padding:80px 32px 100px;
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* ── header line ── */
+.hr{width:1px;height:52px;background:linear-gradient(to bottom,transparent,var(--gold));opacity:.5;margin-bottom:44px;animation:up .8s ease both}
+
+/* ── logo mark ── */
+.mark{
+  width:56px;height:56px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;
+  position:relative;
+  animation:up .8s .05s ease both;
+}
+.mark::after{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:1px solid rgba(184,154,106,.1);
+  animation:spin 20s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── wordmark ── */
+.wordmark{text-align:center;animation:up .8s .1s ease both;margin-bottom:4px}
+.wm-eyebrow{
+  font-family:'Montserrat',sans-serif;font-weight:200;
+  font-size:.52rem;letter-spacing:.55em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;
+}
+.wm-title{
+  font-family:'Cormorant',serif;font-weight:300;
+  font-size:2.75rem;line-height:1;letter-spacing:.08em;
+  color:var(--ink);
+}
+.wm-title em{font-style:italic;color:var(--gold)}
+.wm-city{
+  font-family:'Montserrat',sans-serif;font-weight:200;
+  font-size:.55rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--mute);margin-top:10px;
+}
+
+/* ── nail row ── */
+.nails{
+  display:flex;align-items:flex-end;gap:4px;
+  margin:32px 0 28px;
+  animation:up .8s .15s ease both;
+}
+.na{
+  border-radius:46% 46% 34% 34% / 54% 54% 46% 46%;
+  position:relative;overflow:hidden;
+  box-shadow:inset 0 -4px 8px rgba(0,0,0,.12),0 2px 10px rgba(0,0,0,.08);
+}
+.na::after{
+  content:'';position:absolute;
+  top:18%;left:18%;right:18%;height:24%;
+  background:linear-gradient(to bottom,rgba(255,255,255,.45),transparent);
+  border-radius:50%;
+}
+.na:nth-child(1){width:14px;height:22px;background:linear-gradient(155deg,#e8d4c8,#c4907a)}
+.na:nth-child(2){width:17px;height:30px;background:linear-gradient(155deg,#d4b898,#a07050)}
+.na:nth-child(3){width:19px;height:36px;background:linear-gradient(155deg,#dcc8b8,#b08060);animation:pulse 4s ease-in-out infinite alternate}
+.na:nth-child(4){width:17px;height:30px;background:linear-gradient(155deg,#d4b898,#a07050)}
+.na:nth-child(5){width:14px;height:22px;background:linear-gradient(155deg,#e8d4c8,#c4907a)}
+@keyframes pulse{
+  from{filter:brightness(1) drop-shadow(0 0 0 rgba(184,154,106,0))}
+  to{filter:brightness(1.1) drop-shadow(0 0 8px rgba(184,154,106,.3))}
+}
+
+/* ── thin rule ── */
+.rule{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line) 30%,var(--line) 70%,transparent);
+  margin-bottom:28px;
+  animation:up .8s .18s ease both;
+}
+
+/* ── tagline ── */
+.tagline{
+  font-family:'Cormorant',serif;font-style:italic;font-weight:300;
+  font-size:.95rem;line-height:1.9;letter-spacing:.04em;
+  color:var(--mute);text-align:center;max-width:300px;
+  margin-bottom:40px;
+  animation:up .8s .2s ease both;
+}
+
+/* ── services ── */
+.svcs{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
+  margin-bottom:48px;
+  animation:up .8s .23s ease both;
+}
+.sv{
+  font-family:'Montserrat',sans-serif;font-weight:300;
+  font-size:.48rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--mute);
+  padding:5px 12px;
+  border:1px solid rgba(26,20,16,.1);
+  border-radius:1px;
+}
+
+/* ── section cap ── */
+.cap{
+  font-family:'Montserrat',sans-serif;font-weight:200;
+  font-size:.46rem;letter-spacing:.5em;text-transform:uppercase;
+  color:rgba(184,154,106,.5);
+  margin-bottom:16px;text-align:center;
+  animation:up .8s .26s ease both;
+}
+
+/* ── links ── */
+.links{width:100%;display:flex;flex-direction:column;gap:1px}
+
+.lk{
+  display:flex;align-items:center;gap:16px;
+  padding:18px 20px;
+  text-decoration:none;
+  position:relative;
+  background:transparent;
+  transition:background .25s;
+  animation:up .7s ease both;
+  border-bottom:1px solid rgba(26,20,16,.06);
+}
+.lk:first-child{border-top:1px solid rgba(26,20,16,.06)}
+/* left gold sweep */
+.lk::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:0;
+  background:rgba(184,154,106,.06);
+  transition:width .35s cubic-bezier(.22,1,.36,1);
+}
+.lk:hover{background:rgba(184,154,106,.04)}
+.lk:hover::before{width:100%}
+
+.lk-ic{
+  width:34px;height:34px;
+  border-radius:50%;
+  border:1px solid rgba(26,20,16,.1);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  color:var(--acc, var(--gold));
+  transition:border-color .25s,background .25s;
+  position:relative;z-index:1;
+}
+.lk:hover .lk-ic{border-color:var(--acc,var(--gold));background:rgba(184,154,106,.06)}
+
+.lk-txt{flex:1;position:relative;z-index:1}
+.lk-nm{
+  display:block;
+  font-family:'Montserrat',sans-serif;font-weight:300;
+  font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);
+}
+.lk-ds{
+  display:block;
+  font-family:'Cormorant',serif;font-style:italic;
+  font-size:.82rem;color:var(--mute);margin-top:2px;
+}
+
+.lk-ar{
+  font-size:.6rem;color:var(--mute);
+  position:relative;z-index:1;
+  transition:transform .25s,color .25s;
+  letter-spacing:.06em;
+}
+.lk:hover .lk-ar{transform:translateX(4px);color:var(--gold)}
+
+/* accents */
+.lk-bk{--acc:var(--gold)}
+.lk-ig{--acc:#c49090}
+.lk-tk{--acc:#c4aaaa}
+.lk-yt{--acc:#c49888}
+.lk-pi{--acc:#b88080}
+.lk-fb{--acc:#8aa0c0}
+.lk-wa{--acc:#84b898}
+.lk-sc{--acc:#c8b860}
+.lk-tw{--acc:#90aac4}
+
+/* stagger */
+.lk:nth-child(1){animation-delay:.30s}
+.lk:nth-child(2){animation-delay:.35s}
+.lk:nth-child(3){animation-delay:.40s}
+.lk:nth-child(4){animation-delay:.45s}
+.lk:nth-child(5){animation-delay:.50s}
+.lk:nth-child(6){animation-delay:.55s}
+.lk:nth-child(7){animation-delay:.60s}
+.lk:nth-child(8){animation-delay:.65s}
+.lk:nth-child(9){animation-delay:.70s}
+
+/* ── CTA ── */
+.cta-w{width:100%;margin-top:32px;animation:up .8s .78s ease both}
+.cta{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:18px 24px;
+  text-decoration:none;
+  background:var(--ink);
+  color:var(--nude);
+  font-family:'Montserrat',sans-serif;font-weight:300;
+  font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;
+  border-radius:1px;
+  position:relative;overflow:hidden;
+  transition:color .4s;
+}
+.cta-shine{
+  position:absolute;inset:0;
+  background:var(--gold);
+  transform:translateX(-102%);
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+.cta span,.cta svg{position:relative;z-index:1}
+.cta:hover{color:var(--ink)}
+.cta:hover .cta-shine{transform:translateX(0)}
+
+/* ── footer ── */
+.foot{
+  margin-top:56px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  animation:up .8s .84s ease both;
+}
+.foot-cap{
+  display:flex;align-items:center;gap:12px;
+  font-family:'Montserrat',sans-serif;font-weight:200;
+  font-size:.44rem;letter-spacing:.38em;text-transform:uppercase;
+  color:rgba(26,20,16,.25);
+}
+.foot-cap::before,.foot-cap::after{content:'';width:32px;height:1px;background:rgba(26,20,16,.15)}
+.foot-drop{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);opacity:.3}
+
+/* ── anim ── */
+@keyframes up{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:480px){
+  .page{padding:60px 24px 80px}
+  .wm-title{font-size:2.3rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cd"></div>
+<div id="cr"></div>
+
+<main class="page">
+
+  <!-- top hairline -->
+  <div class="hr"></div>
+
+  <!-- logo mark -->
+  <div class="mark">
+    <!-- minimal nail silhouette -->
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="7" y="2" width="8" height="3" rx="1" fill="#b89a6a" opacity=".5"/>
+      <rect x="8.5" y="5" width="5" height="2.5" rx=".5" fill="#b89a6a" opacity=".65"/>
+      <rect x="8" y="7.5" width="6" height="12" rx="3" fill="#b89a6a"/>
+      <rect x="9" y="9" width="1.5" height="7" rx=".75" fill="rgba(255,255,255,.22)"/>
+    </svg>
+  </div>
+
+  <!-- wordmark -->
+  <div class="wordmark">
+    <p class="wm-eyebrow">Rajvir Nail Artist</p>
+    <h1 class="wm-title">Ra<em>jv</em>ir</h1>
+    <p class="wm-city">23 Latimer St, Wyndham Vale VIC 3024, Australia</p>
+  </div>
+
+  <!-- nails -->
+  <div class="nails">
+    <div class="na"></div>
+    <div class="na"></div>
+    <div class="na"></div>
+    <div class="na"></div>
+    <div class="na"></div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- tagline -->
+  <p class="tagline">
+    Precision. Craft. Beauty.<br>
+    Bespoke nail artistry for the discerning woman.
+  </p>
+
+  <!-- services -->
+  <div class="svcs">
+    <span class="sv">Gel Manicure</span>
+    <span class="sv">Nail Art</span>
+    <span class="sv">Acrylics</span>
+    <span class="sv">Extensions</span>
+    <span class="sv">Pedicure</span>
+    <span class="sv">Spa Treatment</span>
+  </div>
+
+  <!-- links -->
+  <p class="cap">Find us</p>
+
+  <div class="links">
+
+    <!-- <a href="https://YOUR-BOOKING-LINK.com" target="_blank" rel="noopener" class="lk lk-bk">
+      <div class="lk-ic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">Book Appointment</span>
+        <span class="lk-ds">Reserve your session</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a> -->
+
+    <a href="instagram.com/rajvir_nail_artist/" target="_blank" rel="noopener" class="lk lk-ig">
+      <div class="lk-ic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">Instagram</span>
+        <span class="lk-ds">Portfolio &amp; daily work</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a>
+
+    <a href="www.tiktok.com/@nailsbyrajvir1" target="_blank" rel="noopener" class="lk lk-tk">
+      <div class="lk-ic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.73a8.18 8.18 0 0 0 4.78 1.52V6.79a4.86 4.86 0 0 1-1.01-.1z"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">TikTok</span>
+        <span class="lk-ds">Behind the studio</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a>
+
+    <!-- <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener" class="lk lk-yt">
+      <div class="lk-ic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+          <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#faf8f5"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">YouTube</span>
+        <span class="lk-ds">Tutorials &amp; process videos</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a> -->
+
+    <!-- <a href="https://pinterest.com/YOUR_USERNAME" target="_blank" rel="noopener" class="lk lk-pi">
+      <div class="lk-ic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.08 3.11 9.45 7.56 11.3-.1-.95-.2-2.4.04-3.44.22-.93 1.47-6.24 1.47-6.24s-.38-.75-.38-1.86c0-1.75 1.01-3.06 2.27-3.06 1.07 0 1.59.8 1.59 1.77 0 1.08-.69 2.69-1.04 4.18-.3 1.25.62 2.27 1.84 2.27 2.21 0 3.7-2.84 3.7-6.2 0-2.56-1.73-4.35-4.2-4.35-2.87 0-4.55 2.15-4.55 4.37 0 .87.33 1.79.75 2.3.08.1.09.19.07.29-.08.3-.25.96-.28 1.09-.04.17-.14.21-.32.13-1.25-.58-2.03-2.42-2.03-3.89 0-3.15 2.29-6.05 6.6-6.05 3.46 0 6.15 2.47 6.15 5.77 0 3.44-2.17 6.21-5.18 6.21-1.01 0-1.96-.53-2.29-1.15l-.62 2.32c-.22.87-.83 1.96-1.24 2.62.93.29 1.92.44 2.94.44 6.63 0 12-5.37 12-12S18.63 0 12 0z"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">Pinterest</span>
+        <span class="lk-ds">Mood boards &amp; design ideas</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a> -->
+
+    <a href="https://www.facebook.com/share/14YduV4bAFo/" target="_blank" rel="noopener" class="lk lk-fb">
+      <div class="lk-ic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">Facebook</span>
+        <span class="lk-ds">Reviews &amp; community</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a>
+
+    <a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank" rel="noopener" class="lk lk-wa">
+      <div class="lk-ic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">WhatsApp</span>
+        <span class="lk-ds">Direct enquiries</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a>
+
+    <!-- <a href="https://snapchat.com/add/YOUR_USERNAME" target="_blank" rel="noopener" class="lk lk-sc">
+      <div class="lk-ic">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.02 1.5C8.3 1.5 6.02 3.85 6.02 7.5v1.3c-.3.1-.7.18-1.1.18-.4 0-.75-.08-.75-.08l-.2 1.28s.4.08.93.08c.42 0 .87-.07 1.12-.14-.05.47-.1.9-.1 1.25 0 2.5 2.03 4.6 4.18 5.6-.08.3-.32.55-.7.7-.56.2-1.4.28-2.4.5-.23.05-.45.1-.6.22-.2.17-.23.4-.2.57.05.23.22.42.47.52.14.06 2.2.6 2.5 1.6.04.17.13.27.3.27h.09c.1 0 .2-.06.3-.12.36-.24.93-.37 1.55-.37.55 0 1.14.1 1.7.38.28.14.46.16.57.16h.05c.17 0 .27-.1.31-.27.28-1 2.36-1.54 2.5-1.6.25-.1.42-.29.47-.52.03-.17 0-.4-.2-.57-.15-.12-.37-.17-.6-.22-1-.22-1.83-.3-2.4-.5-.37-.15-.6-.4-.7-.7 2.15-1 4.18-3.1 4.18-5.6 0-.35-.05-.78-.1-1.25.25.07.7.14 1.12.14.53 0 .93-.08.93-.08l-.2-1.28s-.35.08-.75.08c-.4 0-.8-.08-1.1-.18V7.5c0-3.65-2.28-6-5.98-6z"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">Snapchat</span>
+        <span class="lk-ds">Stories &amp; exclusive offers</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a> -->
+
+    <!-- <a href="https://x.com/YOUR_USERNAME" target="_blank" rel="noopener" class="lk lk-tw">
+      <div class="lk-ic">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </div>
+      <div class="lk-txt">
+        <span class="lk-nm">X · Twitter</span>
+        <span class="lk-ds">News &amp; nail care tips</span>
+      </div>
+      <span class="lk-ar">→</span>
+    </a> -->
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-w">
+    <a href="https://YOUR-BOOKING-LINK.com" target="_blank" rel="noopener" class="cta">
+      <div class="cta-shine"></div>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span>Book Your Appointment</span>
+    </a>
+  </div>
+
+  <!-- footer -->
+  <div class="foot">
+    <p class="foot-cap">Rajvir Nail Artist &nbsp;·&nbsp; 2026</p>
+    <div class="foot-drop"></div>
+  </div>
+
+</main>
+
+<script>
+const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+let mx=-200,my=-200,rx=-200,ry=-200;
+if(window.matchMedia('(pointer:fine)').matches){
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cd.style.left=mx+'px';cd.style.top=my+'px';
+  });
+  (function tick(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    cr.style.left=rx+'px';cr.style.top=ry+'px';
+    requestAnimationFrame(tick);
+  })();
+  document.querySelectorAll('a').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cr.style.width=cr.style.height='44px';cr.style.borderColor='rgba(184,154,106,.7)'});
+    el.addEventListener('mouseleave',()=>{cr.style.width=cr.style.height='24px';cr.style.borderColor='rgba(184,154,106,.5)'});
+  });
+}else{cd.style.display=cr.style.display='none';document.body.style.cursor='auto'}
+</script>
+</body>
+</html>
